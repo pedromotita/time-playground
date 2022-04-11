@@ -9,9 +9,12 @@ import Foundation
 import SwiftUI
 
 struct LargeButton: View {
+    
+    var action: () -> Void
+    
     var body: some View {
         Button {
-            print("Start timer!")
+            action()
         } label: {
             Text("Start timer!")
                 .foregroundColor(Color.white)
