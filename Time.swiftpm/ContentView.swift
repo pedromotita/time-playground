@@ -23,6 +23,5 @@ struct ContentView: View {
                 .padding(.bottom, 40)
         }
         .frame(maxHeight: .infinity)
-        .background(Color.init("dark-blue"))
     }
 }
