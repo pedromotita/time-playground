@@ -27,7 +27,7 @@ class TimerProvider: ObservableObject {
     }
     
     public func uptadeRemainingTime() {
-        if remainingTime <= 1 {
+        if remainingTime == 0 {
             self.cancelTimer()
         } else {
             remainingTime = remainingTime - 1
