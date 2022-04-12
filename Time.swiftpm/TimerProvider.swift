@@ -16,6 +16,7 @@ class TimerProvider: ObservableObject {
     }
     
     @Published public var remainingTime = 15
+    
     public var subscription: Cancellable? = nil
     public var publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
     
