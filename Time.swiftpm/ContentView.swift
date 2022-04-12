@@ -3,7 +3,7 @@ import Combine
 
 struct ContentView: View {
     
-    @StateObject private var timer = TimerProvider()
+    @StateObject private var timer = TimerProvider.shared
     @State private var heightChange: CGFloat = 0
     
     var body: some View {
@@ -13,13 +13,13 @@ struct ContentView: View {
                     .ignoresSafeArea(.all, edges: .all)
                     .frame(height: (geometry.size.height)  - heightChange)
                     .frame(maxWidth: .infinity, maxHeight: geometry.size.height, alignment: .bottom)
-                .onReceive(timer.timerPublisher) { _ in
+                .onReceive(timer.publisher) { _ in
                     let heightFactor = (geometry.size.height)/CGFloat(15)
                     let timeDelta = 15 - timer.remainingTime
                     withAnimation(.default) {
                         heightChange = CGFloat(timeDelta) * heightFactor
                     }
-                    
+
                     if timer.remainingTime == 0 {
                         withAnimation(.default) {
                             heightChange = 0
@@ -29,15 +29,15 @@ struct ContentView: View {
                 VStack(alignment: .center) {
                     Spacer()
                     Text("\(timer.remainingTime)")
-                        .onReceive(timer.timerPublisher) { _ in
-                            timer.uptadeRemainingTime()
+                        .onReceive(timer.publisher) { _ in
+                            timer.updateRemainingTime()
                         }
                         .foregroundColor(Color.white)
                         .frame(maxWidth: .infinity)
                         .font(.title)
                     Spacer()
                     LargeButton {
-                        timer.startTimer()
+                        timer.start()
                     }
                         .padding(.horizontal, 32)
                         .padding(.bottom, 40)
