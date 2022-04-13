@@ -27,6 +27,8 @@ struct SlidingView: View {
 
                 if timer.remainingTime == 0 {
                     withAnimation(.default) {
+                        timer.remainingTime = 15
+                        timer.cancel()
                         heightDelta = 0
                     }
                 }
@@ -38,5 +40,6 @@ struct SlidingView: View {
 struct SlidingView_Previews: PreviewProvider {
     static var previews: some View {
         SlidingView()
+            .environmentObject(TimerProvider.shared)
     }
 }
