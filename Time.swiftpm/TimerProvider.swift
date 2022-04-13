@@ -10,27 +10,36 @@ import Combine
 
 class TimerProvider: ObservableObject {
     
-    @Published var remainingTime = 15
+    static var shared: TimerProvider {
+        let instance = TimerProvider()
+        return instance
+    }
     
-    private var timerSubscription: Cancellable? = nil
+    @Published public var remainingTime = 15
     
-    var timerPublisher = Timer.TimerPublisher(interval: 1.0, runLoop: .main, mode: .common)
+    public var subscription: Cancellable? = nil
+    public var publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
     
-    public func startTimer() {
+    private init() {}
+    
+    func start() {
         remainingTime = 15
-        timerPublisher = Timer.TimerPublisher(interval: 1.0, runLoop: .main, mode: .common)
-        timerSubscription = self.timerPublisher.connect()
+        publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
+        subscription = publisher.connect()
     }
     
-    public func cancelTimer() {
-        timerSubscription?.cancel()
+    func cancel() {
+        if let subscription = subscription {
+            subscription.cancel()
+        }
     }
     
-    public func uptadeRemainingTime() {
-        if remainingTime <= 1 {
-            self.cancelTimer()
+    func updateRemainingTime() {
+        if remainingTime == 0 {
+            self.cancel()
         } else {
             remainingTime = remainingTime - 1
         }
     }
+    
 }

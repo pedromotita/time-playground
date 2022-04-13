@@ -1,28 +1,38 @@
-import SwiftUI
-import Combine
+//
+//  UserInterfaceView.swift
+//  Time
+//
+//  Created by Pedro Mota on 12/04/22.
+//
 
-struct ContentView: View {
+import SwiftUI
+
+struct UserInterfaceView: View {
     
-    @StateObject private var timer = TimerProvider()
+    @EnvironmentObject private var timer: TimerProvider
     
     var body: some View {
         VStack(alignment: .center) {
             Spacer()
             Text("\(timer.remainingTime)")
-                .onReceive(timer.timerPublisher) { _ in
-                    timer.uptadeRemainingTime()
+                .onReceive(timer.publisher) { _ in
+                    timer.updateRemainingTime()
                 }
                 .foregroundColor(Color.white)
                 .frame(maxWidth: .infinity)
                 .font(.title)
             Spacer()
             LargeButton {
-                timer.startTimer()
+                timer.start()
             }
                 .padding(.horizontal, 32)
                 .padding(.bottom, 40)
         }
-        .frame(maxHeight: .infinity)
-        .background(Color.init("dark-blue"))
+    }
+}
+
+struct UserInterfaceView_Previews: PreviewProvider {
+    static var previews: some View {
+        UserInterfaceView()
     }
 }
