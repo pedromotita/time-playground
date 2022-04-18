@@ -24,6 +24,8 @@ struct LargeButton: View {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(Color.white, lineWidth: 2)
                 )
+                .padding(.horizontal, 32)
+                .padding(.bottom, 40)
         }
     }
 }
