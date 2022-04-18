@@ -22,8 +22,6 @@ struct UserInterfaceView: View {
             LargeButton {
                 timer.start()
             }
-                .padding(.horizontal, 32)
-                .padding(.bottom, 40)
         }
     }
 }
