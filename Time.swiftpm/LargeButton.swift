@@ -10,6 +10,8 @@ import SwiftUI
 
 struct LargeButton: View {
     
+    @Binding var isHidden: Bool
+    
     var action: () -> Void
     
     var body: some View {
@@ -27,5 +29,6 @@ struct LargeButton: View {
                 .padding(.horizontal, 32)
                 .padding(.bottom, 40)
         }
+        .opacity(isHidden ? 0 : 1)
     }
 }

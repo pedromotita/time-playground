@@ -16,6 +16,7 @@ class TimerProvider: ObservableObject {
     }
     
     @Published public var remainingTime = 15
+    @Published public var isRunning = false
     
     public var subscription: Cancellable? = nil
     public var publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
@@ -32,6 +33,8 @@ class TimerProvider: ObservableObject {
         if let subscription = subscription {
             subscription.cancel()
         }
+        self.remainingTime = 15
+        
     }
     
     func updateRemainingTime() {
