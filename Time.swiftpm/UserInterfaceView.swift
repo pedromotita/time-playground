@@ -10,6 +10,7 @@ import SwiftUI
 struct UserInterfaceView: View {
     
     @EnvironmentObject private var timer: TimerProvider
+    @State private var isTimerRunning: Bool = false
     
     var body: some View {
         VStack(alignment: .center) {
@@ -17,9 +18,17 @@ struct UserInterfaceView: View {
             TimeIndicator(remainingTime: $timer.remainingTime)
                 .onReceive(timer.publisher) { _ in
                     timer.updateRemainingTime()
+                    if timer.remainingTime == 0 {
+                        withAnimation(.easeIn(duration: 1.0)) {
+                            self.isTimerRunning = false
+                        }
+                    }
                 }
             Spacer()
-            LargeButton {
+            LargeButton(isHidden: $isTimerRunning) {
+                withAnimation(.easeOut(duration: 1.0)) {
+                    self.isTimerRunning = true
+                }
                 timer.start()
             }
         }

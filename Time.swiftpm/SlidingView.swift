@@ -15,25 +15,25 @@ struct SlidingView: View {
     var body: some View {
         GeometryReader { geometry in
             Color.init("primary-red")
-                .ignoresSafeArea(.all, edges: .all)
-                .frame(height: (geometry.size.height)  - heightDelta)
+                .ignoresSafeArea()
+                .frame(height: geometry.size.height - heightDelta)
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.height, alignment: .bottom)
             .onReceive(timer.publisher) { _ in
                 let heightFactor = (geometry.size.height)/CGFloat(15)
-                let timeDelta = 15 - timer.remainingTime
+                let timeDelta = 15 - (timer.remainingTime - 1)
                 withAnimation(.default) {
                     heightDelta = CGFloat(timeDelta) * heightFactor
                 }
 
                 if timer.remainingTime == 0 {
                     withAnimation(.default) {
-                        timer.remainingTime = 15
                         timer.cancel()
                         heightDelta = 0
                     }
                 }
             }
         }
+        .ignoresSafeArea()
     }
 }
 
