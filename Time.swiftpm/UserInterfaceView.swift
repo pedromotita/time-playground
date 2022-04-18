@@ -14,13 +14,10 @@ struct UserInterfaceView: View {
     var body: some View {
         VStack(alignment: .center) {
             Spacer()
-            Text("\(timer.remainingTime)")
+            TimeIndicator(remainingTime: $timer.remainingTime)
                 .onReceive(timer.publisher) { _ in
                     timer.updateRemainingTime()
                 }
-                .foregroundColor(Color.white)
-                .frame(maxWidth: .infinity)
-                .font(.title)
             Spacer()
             LargeButton {
                 timer.start()
@@ -34,5 +31,6 @@ struct UserInterfaceView: View {
 struct UserInterfaceView_Previews: PreviewProvider {
     static var previews: some View {
         UserInterfaceView()
+            .environmentObject(TimerProvider.shared)
     }
 }
