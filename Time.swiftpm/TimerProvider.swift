@@ -24,26 +24,31 @@ class TimerProvider: ObservableObject {
     private init() {}
     
     func start() {
-        remainingTime = 15
-        publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
-        subscription = publisher.connect()
-        isRunning = true
+        DispatchQueue.main.async {
+            self.remainingTime = 15
+            self.publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
+            self.subscription = self.publisher.connect()
+            self.isRunning = true
+        }
     }
     
     func cancel() {
-        if let subscription = subscription {
-            subscription.cancel()
+        DispatchQueue.main.async {
+            if let subscription = self.subscription {
+                subscription.cancel()
+            }
         }
-        self.remainingTime = 15
-        isRunning = false
-        
     }
     
     func updateRemainingTime() {
-        if remainingTime == 0 {
-            self.cancel()
-        } else {
-            remainingTime = remainingTime - 1
+        DispatchQueue.main.async {
+            if self.remainingTime == 0 {
+                self.remainingTime = 15
+                self.isRunning = false
+                self.cancel()
+            } else {
+                self.remainingTime = self.remainingTime - 1
+            }
         }
     }
     

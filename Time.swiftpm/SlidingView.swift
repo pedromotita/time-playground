@@ -20,7 +20,7 @@ struct SlidingView: View {
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.height, alignment: .bottom)
             .onReceive(timer.publisher) { _ in
                 let heightFactor = (geometry.size.height)/CGFloat(15)
-                let timeDelta = 15 - (timer.remainingTime - 1)
+                let timeDelta = 15 - (timer.remainingTime-1)
                 withAnimation(.default) {
                     heightDelta = CGFloat(timeDelta) * heightFactor
                 }
