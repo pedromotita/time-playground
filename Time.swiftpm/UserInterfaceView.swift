@@ -10,26 +10,21 @@ import SwiftUI
 struct UserInterfaceView: View {
     
     @EnvironmentObject private var timer: TimerProvider
-    @State private var isTimerRunning: Bool = false
     
     var body: some View {
         VStack(alignment: .center) {
             Spacer()
             TimeIndicator(remainingTime: $timer.remainingTime)
                 .onReceive(timer.publisher) { _ in
-                    timer.updateRemainingTime()
-                    if timer.remainingTime == 0 {
-                        withAnimation(.easeIn(duration: 1.0)) {
-                            self.isTimerRunning = false
-                        }
+                    withAnimation {
+                        timer.updateRemainingTime()
                     }
                 }
             Spacer()
-            LargeButton(isHidden: $isTimerRunning) {
+            LargeButton(isHidden: $timer.isRunning) {
                 withAnimation(.easeOut(duration: 1.0)) {
-                    self.isTimerRunning = true
+                    timer.start()
                 }
-                timer.start()
             }
         }
     }
