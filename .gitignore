@@ -1,0 +1,8 @@
+## User settings
+xcuserdata/
+
+.swiftpm
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
