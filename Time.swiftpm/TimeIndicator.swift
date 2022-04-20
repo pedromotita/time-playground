@@ -15,7 +15,7 @@ struct TimeIndicator: View {
         Text("\(remainingTime)")
             .foregroundColor(Color.white)
             .frame(maxWidth: .infinity)
-            .font(.title)
+            .font(.system(size: 64))
     }
 }
 
