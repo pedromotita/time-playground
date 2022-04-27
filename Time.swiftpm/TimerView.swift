@@ -9,13 +9,13 @@ import SwiftUI
 
 struct TimerView: View {
     
-    @StateObject var timer = TimerProvider.shared
+    @ObservedObject var timer = TimerProvider.shared
     
     var body: some View {
         ZStack {
             BackgroundView()
             SlidingView()
-            UserInterfaceView()
+            UserInterfaceView(timerProvider: timer)
         }
         .environmentObject(timer)
     }

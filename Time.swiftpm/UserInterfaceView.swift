@@ -9,21 +9,21 @@ import SwiftUI
 
 struct UserInterfaceView: View {
     
-    @EnvironmentObject private var timer: TimerProvider
+    @ObservedObject var timerProvider: TimerProvider
     
     var body: some View {
         VStack(alignment: .center) {
             Spacer()
-            TimeIndicator(remainingTime: $timer.remainingTime)
-                .onReceive(timer.publisher) { _ in
+            TimeIndicator(remainingTime: $timerProvider.remainingTime)
+                .onReceive(timerProvider.publisher) { _ in
                     withAnimation {
-                        timer.updateRemainingTime()
+                        timerProvider.updateRemainingTime()
                     }
                 }
             Spacer()
-            LargeButton(isHidden: $timer.isRunning) {
+            LargeButton(isHidden: $timerProvider.isRunning) {
                 withAnimation(.easeOut(duration: 1.0)) {
-                    timer.start()
+                    timerProvider.start()
                 }
             }
         }
@@ -32,7 +32,7 @@ struct UserInterfaceView: View {
 
 struct UserInterfaceView_Previews: PreviewProvider {
     static var previews: some View {
-        UserInterfaceView()
+        UserInterfaceView(timerProvider: TimerProvider.shared)
             .environmentObject(TimerProvider.shared)
     }
 }
