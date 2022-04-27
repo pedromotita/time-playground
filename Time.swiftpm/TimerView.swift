@@ -14,7 +14,7 @@ struct TimerView: View {
     var body: some View {
         ZStack {
             BackgroundView()
-            SlidingView()
+            SlidingView(timerProvider: timer)
             UserInterfaceView(timerProvider: timer)
         }
         .environmentObject(timer)
