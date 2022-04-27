@@ -20,12 +20,13 @@ struct SlidingView: View {
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.height, alignment: .bottom)
             .onReceive(timer.publisher) { _ in
                 let heightFactor = (geometry.size.height)/CGFloat(15)
-                let timeDelta = 15 - (timer.remainingTime-1)
-                withAnimation(.default) {
-                    heightDelta = CGFloat(timeDelta) * heightFactor
-                }
-
-                if timer.remainingTime == 0 {
+                let timeDelta = 15 - (timer.remainingTime-0.2)
+                
+                if timer.remainingTime > 0.0001 {
+                    withAnimation(.default) {
+                        heightDelta = CGFloat(timeDelta) * heightFactor
+                    }
+                } else {
                     withAnimation(.default) {
                         timer.cancel()
                         heightDelta = 0

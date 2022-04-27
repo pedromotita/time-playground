@@ -15,18 +15,18 @@ class TimerProvider: ObservableObject {
         return instance
     }
     
-    @Published public var remainingTime = 15
+    @Published public var remainingTime: Float = 15
     @Published public var isRunning = false
     
     public var subscription: Cancellable? = nil
-    public var publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
+    public var publisher = Timer.TimerPublisher(interval: 0.2, runLoop: .main, mode: .common)
     
     private init() {}
     
     func start() {
         DispatchQueue.main.async {
             self.remainingTime = 15
-            self.publisher = Timer.TimerPublisher(interval: 1, runLoop: .main, mode: .common)
+            self.publisher = Timer.TimerPublisher(interval: 0.2, runLoop: .main, mode: .common)
             self.subscription = self.publisher.connect()
             self.isRunning = true
         }
@@ -42,12 +42,13 @@ class TimerProvider: ObservableObject {
     
     func updateRemainingTime() {
         DispatchQueue.main.async {
-            if self.remainingTime == 0 {
+            print(self.remainingTime)
+            if self.remainingTime < 0.1 {
                 self.remainingTime = 15
                 self.isRunning = false
                 self.cancel()
             } else {
-                self.remainingTime = self.remainingTime - 1
+                self.remainingTime = self.remainingTime - 0.2
             }
         }
     }

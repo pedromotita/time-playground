@@ -9,10 +9,10 @@ import SwiftUI
 
 struct TimeIndicator: View {
     
-    @Binding var remainingTime: Int
+    @Binding var remainingTime: Float
     
     var body: some View {
-        Text("\(remainingTime)")
+        Text("\(Int(remainingTime))")
             .foregroundColor(Color.white)
             .frame(maxWidth: .infinity)
             .font(.system(size: 64))
