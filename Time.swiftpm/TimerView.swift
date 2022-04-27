@@ -17,7 +17,6 @@ struct TimerView: View {
             SlidingView(timerProvider: timer)
             UserInterfaceView(timerProvider: timer)
         }
-        .environmentObject(timer)
     }
 }
 
