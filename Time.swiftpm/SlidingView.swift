@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SlidingView: View {
     
-    @EnvironmentObject var timer: TimerProvider
+    @ObservedObject var timerProvider: TimerProvider
     @State var heightDelta: CGFloat = 0
     
     var body: some View {
@@ -18,17 +18,17 @@ struct SlidingView: View {
                 .ignoresSafeArea()
                 .frame(height: geometry.size.height - heightDelta)
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.height, alignment: .bottom)
-            .onReceive(timer.publisher) { _ in
+            .onReceive(timerProvider.publisher) { _ in
                 let heightFactor = (geometry.size.height)/CGFloat(15)
-                let timeDelta = 15 - (timer.remainingTime-0.2)
+                let timeDelta = 15 - (timerProvider.remainingTime-0.2)
                 
-                if timer.remainingTime > 0.0001 {
+                if timerProvider.remainingTime > 0.0001 {
                     withAnimation(.default) {
                         heightDelta = CGFloat(timeDelta) * heightFactor
                     }
                 } else {
                     withAnimation(.default) {
-                        timer.cancel()
+                        timerProvider.cancel()
                         heightDelta = 0
                     }
                 }
@@ -40,7 +40,7 @@ struct SlidingView: View {
 
 struct SlidingView_Previews: PreviewProvider {
     static var previews: some View {
-        SlidingView()
+        SlidingView(timerProvider: TimerProvider.shared)
             .environmentObject(TimerProvider.shared)
     }
 }
